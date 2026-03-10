@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FLO Operasyonel Denetim Sistemi | ardaulas.online</title>
+<title>FLO Denetim Sistemi | ardaulas.online</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
@@ -47,7 +47,7 @@
   .container { max-width:960px; margin:0 auto; padding:32px 24px; flex:1; width:100%; }
 
   /* CARD & CRITERIA UI */
-  .audit-card { background: var(--surface); border: 1px solid var(--border); border-radius:16px; margin-bottom:12px; overflow:hidden; animation: fadeIn 0.3s ease; }
+  .audit-card { background: var(--surface); border: 1px solid var(--border); border-radius:16px; margin-bottom:12px; overflow:hidden; animation: fadeIn 0.3s ease; position: relative; }
   .card-header { padding:20px; display:grid; grid-template-columns: auto 1fr auto; gap:16px; align-items:start; background: rgba(255,255,255,0.02); border-bottom:1px solid var(--border); }
   .card-num { width:44px; height:44px; border-radius:12px; background:var(--surface2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-family:'Syne',sans-serif; font-weight:800; font-size:15px; color:var(--muted); }
   .card-meta { display:flex; flex-direction:column; justify-content:center; min-height:44px; }
@@ -107,7 +107,6 @@
   .modal-close { position:absolute; top:16px; right:16px; width:32px; height:32px; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--muted); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; z-index:10; }
   .modal h2 { font-family:'Syne',sans-serif; font-size:22px; margin-bottom:16px; text-align:center; }
   
-  /* ESKİ MAVİ OKLU LİSTE YAPISI */
   .standards-list { list-style:none; padding:0; margin-top:10px; }
   .standards-list li { padding:10px 0; border-bottom:1px solid var(--border); font-size:13.5px; color:#ccc; line-height:1.6; display:flex; align-items:flex-start; gap:10px; }
   .standards-list li span.blue-arrow { color:var(--blue); font-weight:bold; font-size:14px; margin-top:-1px; }
@@ -116,6 +115,7 @@
   .form-group { margin-bottom:16px; }
   .form-group label { display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:600; text-transform:uppercase; }
   .form-input { width:100%; background:var(--surface2); border:1px solid var(--border); color:var(--text); padding:12px; border-radius:10px; outline:none; font-family:'DM Sans'; font-size:14px; }
+  .form-input option { background: var(--surface); color: var(--text); }
   .btn-start { width:100%; padding:14px; border-radius:10px; background:var(--primary); color:#fff; font-weight:700; font-family:'Syne'; border:none; cursor:pointer; margin-top:10px; font-size:16px; }
   .btn-start:hover { background:var(--primary-dark); }
 
@@ -142,48 +142,52 @@
 
   @keyframes fadeIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
   
+  /* ================== MOBİL UYUM (RESPONSIVE) KODLARI ================== */
+  @media (max-width: 768px) {
+    .top-bar { height: auto; flex-direction: column; padding: 16px; gap: 16px; }
+    .brand { width: 100%; justify-content: center; }
+    .score-display { width: 100%; justify-content: center; }
+    .header-actions { width: 100%; justify-content: space-between; }
+    .audit-code-badge { font-size: 11px; padding: 8px 12px; }
+    
+    .progress-container { flex-direction: column; padding: 16px; gap: 12px; align-items: stretch; }
+    .progress-stats { flex-wrap: wrap; justify-content: center; gap: 12px; }
+    
+    .container { padding: 16px 12px; }
+    .card-header { grid-template-columns: 1fr auto; }
+    .card-num { margin-bottom: 10px; }
+    .criterion-text-box { flex-direction: column; gap: 8px; }
+    .criterion-pts { align-self: flex-start; }
+    .card-actions { margin-left: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+    .btn-action { justify-content: center; padding: 10px 4px; font-size: 11px; }
+    .extras-area { padding: 0 16px 20px 16px; }
+    
+    .pagination-controls { flex-direction: column; gap: 16px; padding-top: 16px; }
+    .page-indicator { order: -1; margin-bottom: 4px; }
+    .btn-nav { width: 100%; text-align: center; justify-content: center; }
+    
+    .modal { padding: 24px 16px; }
+    .admin-table-wrapper { overflow-x: auto; -webkit-overflow-scrolling: touch; width: 100%; }
+    .report-table { min-width: 550px; }
+  }
+
   /* ================== KESİN ÇÖZÜM - PRINT (YAZDIRMA) MOTORU ================== */
   @media print {
     @page { margin: 10mm; }
-    html, body { 
-      display: block !important; 
-      position: static !important;
-      background: #fff !important; color: #000 !important; 
-      height: auto !important; min-height: 100% !important; 
-      overflow: visible !important; 
-      margin: 0 !important; padding: 0 !important;
-    }
-    
-    /* Rapor dışındaki her şeyi gizle */
+    html, body { display: block !important; position: static !important; background: #fff !important; color: #000 !important; height: auto !important; min-height: 100% !important; overflow: visible !important; margin: 0 !important; padding: 0 !important; }
     body > div:not(#reportModal) { display: none !important; }
     header, footer, nav, aside, .progress-container { display: none !important; }
     
-    /* Rapor modalını normal bir evrak gibi yay */
-    #reportModal { 
-      display: block !important; position: static !important; 
-      background: #fff !important; padding: 0 !important; margin: 0 !important;
-      overflow: visible !important; height: auto !important; min-height: auto !important;
-    }
-    #reportModalContent { 
-      display: block !important; position: static !important; 
-      width: 100% !important; max-width: 100% !important; 
-      border: none !important; box-shadow: none !important; 
-      margin: 0 !important; padding: 0 !important;
-      height: auto !important; max-height: none !important; 
-      overflow: visible !important; transform: none !important;
-    }
+    #reportModal { display: block !important; position: static !important; background: #fff !important; padding: 0 !important; margin: 0 !important; overflow: visible !important; height: auto !important; min-height: auto !important; }
+    #reportModalContent { display: block !important; position: static !important; width: 100% !important; max-width: 100% !important; border: none !important; box-shadow: none !important; margin: 0 !important; padding: 0 !important; height: auto !important; max-height: none !important; overflow: visible !important; transform: none !important; }
     
     .print-hide, .modal-close { display: none !important; }
-
-    /* Tablo Bölünme Kuralları */
     .report-table { page-break-inside: auto !important; width: 100% !important; border-collapse: collapse !important; margin-bottom: 20px !important; }
     .report-table tr { page-break-inside: avoid !important; page-break-after: auto !important; }
     .report-table th { background: #f0f0f0 !important; color: #000 !important; border-bottom: 2px solid #ccc !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
     .report-table td { border-bottom: 1px solid #e0e0e0 !important; color: #000 !important; page-break-inside: avoid !important; }
-    
     .print-chapter-title { color: #000 !important; border-bottom: 2px solid #000 !important; margin-top: 30px !important; margin-bottom: 15px !important; page-break-after: avoid !important; font-size: 18px !important; font-weight: bold !important; }
     
-    /* Etiket Renklerini Koru (Yeşil/Kırmızı/Gri) */
     .badge-s { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; border-radius: 6px !important; border: 1px solid transparent !important; }
     .badge-s.t { background: rgba(255,59,48,0.15) !important; color: #FF3B30 !important; border-color: rgba(255,59,48,0.3) !important; }
     .badge-s.y { background: rgba(48,209,88,0.15) !important; color: #1E8E3E !important; border-color: rgba(48,209,88,0.3) !important; }
@@ -191,7 +195,6 @@
     
     .modal-score-box { background: #fafafa !important; border: 1px solid #ddd !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; page-break-inside: avoid !important; }
     .modal-score-box .v { color: inherit !important; }
-
     .report-img-wrapper { page-break-inside: avoid !important; margin-top:8px !important; display:flex !important; gap:8px !important; flex-wrap:wrap !important; }
     .report-img { height:100px !important; width:100px !important; object-fit:cover !important; border-radius:4px !important; border:1px solid #aaa !important; }
   }
@@ -202,10 +205,20 @@
 <div class="modal-overlay open" id="startupModal" style="z-index: 2000;">
   <div class="modal" style="max-width: 400px;">
     <h2>Yeni Denetim Başlat</h2>
-    <div class="form-group"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Mağaza Kodu</label><input type="text" id="inpStoreCode" style="width:100%; padding:10px; background:var(--surface2); border:1px solid var(--border); color:#fff; border-radius:8px;" placeholder="Örn: 9070"></div>
-    <div class="form-group" style="margin-top:10px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Mağaza İsmi</label><input type="text" id="inpStoreName" style="width:100%; padding:10px; background:var(--surface2); border:1px solid var(--border); color:#fff; border-radius:8px;" placeholder="Mağaza adı..."></div>
-    <div class="form-group" style="margin-top:10px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Denetmen</label><input type="text" id="inpAuditor" style="width:100%; padding:10px; background:var(--surface2); border:1px solid var(--border); color:#fff; border-radius:8px;" placeholder="Ad Soyad..."></div>
-    <button onclick="startAudit()" style="width:100%; margin-top:20px; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Sistemi Başlat</button>
+    
+    <div class="form-group">
+      <label>Denetim Türü</label>
+      <select id="inpAuditType" class="form-input" style="cursor: pointer; appearance: auto;">
+        <option value="" disabled selected>Denetim türünü seçiniz...</option>
+        <option value="Operasyonel Denetim">Operasyonel Denetim</option>
+        <option value="Dijital Denetim">Dijital Denetim</option>
+      </select>
+    </div>
+
+    <div class="form-group"><label>Mağaza Kodu</label><input type="text" id="inpStoreCode" class="form-input" placeholder="Örn: 9070" autocomplete="off"></div>
+    <div class="form-group"><label>Mağaza İsmi</label><input type="text" id="inpStoreName" class="form-input" placeholder="Mağaza Adı..." autocomplete="off"></div>
+    <div class="form-group"><label>Denetmen</label><input type="text" id="inpAuditor" class="form-input" placeholder="Ad Soyad..." autocomplete="off"></div>
+    <button class="btn-start" onclick="startAudit()">Sistemi Başlat</button>
   </div>
 </div>
 
@@ -213,9 +226,9 @@
   <div class="modal" style="max-width: 400px;">
     <button class="modal-close" onclick="closeModal('adminAuthModal')">✕</button>
     <h2>Yetkili Girişi</h2>
-    <div class="form-group"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Kullanıcı Adı</label><input type="text" id="inpAdminUser" style="width:100%; padding:10px; background:var(--surface2); border:1px solid var(--border); color:#fff; border-radius:8px;" placeholder="Kullanıcı adınızı girin"></div>
-    <div class="form-group" style="margin-top:10px;"><label style="display:block; font-size:12px; color:var(--muted); margin-bottom:5px;">Şifre</label><input type="password" id="inpAdminPass" style="width:100%; padding:10px; background:var(--surface2); border:1px solid var(--border); color:#fff; border-radius:8px;" placeholder="••••••"></div>
-    <button id="adminLoginBtn" onclick="checkAdminAuth()" style="width:100%; margin-top:20px; padding:14px; background:var(--primary); color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">Giriş Yap</button>
+    <div class="form-group"><label>Kullanıcı Adı</label><input type="text" id="inpAdminUser" class="form-input" placeholder="Kullanıcı adınızı girin" autocomplete="off"></div>
+    <div class="form-group"><label>Şifre</label><input type="password" id="inpAdminPass" class="form-input" placeholder="••••••" autocomplete="off"></div>
+    <button id="adminLoginBtn" class="btn-start" onclick="checkAdminAuth()">Giriş Yap</button>
   </div>
 </div>
 
@@ -223,8 +236,8 @@
   <div class="brand">
     <div class="brand-logo">F</div>
     <div>
-      <div class="brand-name">FLO Operasyonel Denetim</div>
-      <div class="brand-sub">2026 Denetim Sistemi</div>
+      <div class="brand-name" id="uiBrandName">FLO Denetim</div>
+      <div class="brand-sub">2026 Kurumsal Altyapı</div>
     </div>
   </div>
   <div class="score-display">
@@ -252,7 +265,7 @@
 <main class="container print-hide" id="mainContainer"></main>
 
 <footer class="site-footer print-hide">
-  &copy; 2026 FLO Operasyonel Denetim Sistemi | Altyapı: <a href="https://ardaulas.online" target="_blank">ardaulas.online</a> | İletişim: arda@ardaulas.online
+  &copy; 2026 <span id="uiFooterName">FLO Denetim Sistemi</span> | Altyapı: <a href="https://ardaulas.online" target="_blank">ardaulas.online</a>
 </footer>
 
 <div class="modal-overlay print-hide" id="adminDataModal" style="z-index: 2002;">
@@ -300,8 +313,16 @@ let currentStoreName = "";
 let currentAuditor = "";
 let currentQuestionIndex = 0;
 let adminDataCache = {}; 
+let currentAuditType = ""; // Seçim formundan alınacak
 
-// ==================== VERİ SETİ (TAM 32 SORU) ====================
+// Sayfa yüklendiğinde standart başlıklar (URL taraması tamamen kaldırıldı)
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById('uiBrandName').innerText = `FLO Denetim`;
+    document.getElementById('uiFooterName').innerText = `FLO Denetim Sistemi`;
+    document.title = `FLO Denetim | ardaulas.online`;
+});
+
+// ==================== VERİ SETİ (TAM 32 SORU - PDF TABANLI) ====================
 const AUDIT_DATA = [
   { id:1, code:"FOD01", topic:"Mali Süreçler", title:"Mağaza toplam nakiti doğru mu?", puan:5, 
     criteria:[ {text:"Mağaza kasa nakiti ile Genius Report'ta belirtilen nakit miktarı arasında fark var mi?", puan:5} ],
@@ -453,22 +474,30 @@ AUDIT_DATA.forEach(d => {
   totalCriteriaCount += d.criteria.length;
 });
 
-// ==================== STARTUP LOGIC ====================
+// ==================== STARTUP LOGIC & TÜR SEÇİMİ ====================
 function startAudit() {
+  const type = document.getElementById('inpAuditType').value;
   const code = document.getElementById('inpStoreCode').value.trim();
   const name = document.getElementById('inpStoreName').value.trim();
   const auditor = document.getElementById('inpAuditor').value.trim();
 
-  if(!code || !name || !auditor) {
-    alert("Lütfen tüm alanları eksiksiz doldurun.");
+  // Tüm alanların doluluğunu kontrol et (Denetim türü dahil)
+  if(!type || !code || !name || !auditor) {
+    alert("Lütfen denetim türü dahil tüm alanları eksiksiz doldurun.");
     return;
   }
   
+  currentAuditType = type; // Açılır menüden gelen veriyi ata
   currentStoreCode = code;
   currentStoreName = name;
   currentAuditor = auditor;
   
-  document.getElementById('auditCodeBadge').innerText = `${currentStoreName} Operasyonel Denetim`;
+  // Başlıkları ve logoları seçilen türe göre otomatik güncelle
+  document.getElementById('uiBrandName').innerText = `FLO ${currentAuditType}`;
+  document.getElementById('uiFooterName').innerText = `FLO ${currentAuditType} Sistemi`;
+  document.title = `FLO ${currentAuditType} | ardaulas.online`;
+  
+  document.getElementById('auditCodeBadge').innerText = `${currentStoreName} Denetimi`;
   document.getElementById('startupModal').classList.remove('open');
   
   render();
@@ -681,12 +710,14 @@ function finishAudit() {
     };
   });
 
+  // DB'YE TÜR BİLGİSİNİ DE EKLİYORUZ (Açılır menüden gelen seçim)
   const payload = {
     storeCode: currentStoreCode,
     storeName: currentStoreName,
     auditor: currentAuditor,
     date: new Date().toISOString(),
     score: finalScore,
+    auditType: currentAuditType, 
     details: auditDetails
   };
 
@@ -725,15 +756,19 @@ async function openAdminPanel() {
       }
       
       adminDataCache = {};
-      let html = `<table class="report-table" style="text-align:left;">
-          <thead><tr><th>Tarih</th><th>Mağaza Kodu</th><th>Mağaza İsmi</th><th>Denetmen</th><th>Puan</th><th>Rapor</th></tr></thead><tbody>`;
+      // Tabloya "Tür" sütunu eklendi
+      let html = `<div class="admin-table-wrapper"><table class="report-table" style="text-align:left;">
+          <thead><tr><th>Tarih</th><th>Tür</th><th>Mağaza Kodu</th><th>Mağaza İsmi</th><th>Denetmen</th><th>Puan</th><th>Rapor</th></tr></thead><tbody>`;
           
       snapshot.forEach(doc => {
           const data = doc.data();
           adminDataCache[doc.id] = data;
           const d = new Date(data.date).toLocaleDateString('tr-TR', {day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit'});
+          const aType = data.auditType || "Operasyonel Denetim"; // Eski kayıtlar için varsayılan
+          
           html += `<tr>
               <td>${d}</td>
+              <td style="font-weight:600; color:var(--muted)">${aType.split(' ')[0]}</td>
               <td style="font-weight:bold; color:var(--primary)">${data.storeCode}</td>
               <td>${data.storeName}</td>
               <td>${data.auditor}</td>
@@ -741,7 +776,7 @@ async function openAdminPanel() {
               <td><button class="btn-action btn-yok" style="padding:6px 10px; font-size:11px;" onclick="viewPastReport('${doc.id}')">Görüntüle</button></td>
           </tr>`;
       });
-      html += `</tbody></table>`;
+      html += `</tbody></table></div>`;
       area.innerHTML = html;
   } catch(err) {
       area.innerHTML = `<p style="color:red;">Veriler çekilirken hata oluştu: ${err.message}</p>`;
@@ -806,9 +841,12 @@ function generateReportHTML(dataObj) {
     `;
   }
 
+  // Rapor Başlığı veritabanından okunuyor (dataObj.auditType)
+  const reportTypeDisplay = dataObj.auditType || "Operasyonel Denetim";
+
   const body = `
     <div style="text-align:center; margin-bottom:30px; border-bottom:1px solid var(--border); padding-bottom:24px;">
-      <h2 style="font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:6px; color:var(--text)">Operasyonel Denetim Sonuç Raporu</h2>
+      <h2 style="font-family:'Syne',sans-serif; font-size:26px; font-weight:800; margin-bottom:6px; color:var(--text)">${reportTypeDisplay} Sonuç Raporu</h2>
       <p style="color:var(--muted); font-size:14px; margin-bottom:20px;">
         Mağaza: <strong style="color:var(--primary)">${dataObj.storeCode} - ${dataObj.storeName}</strong> &bull; 
         Denetmen: <strong style="color:var(--primary)">${dataObj.auditor}</strong> &bull;
